@@ -1,12 +1,12 @@
 import * as express from 'express';
+import PostNotFoundException from '../exceptions/PostNotFoundException';
 import Controller from '../interfaces/controller.interface';
+import RequestWithUser from '../interfaces/requestWithUser.interface';
+import authMiddleware from '../middleware/auth.middleware';
+import validationMiddleware from '../middleware/validation.middleware';
+import CreatePostDto from './post.dto';
 import Post from './post.interface';
 import postModel from './posts.model';
-import PostNotFoundException from "../exceptions/PostNotFoundException";
-import CreatePostDto from "./post.dto";
-import validationMiddleware from "../middleware/validation.middleware";
-import authMiddleware from "../middleware/auth.middleware";
-import RequestWithUser from "../interfaces/requestWithUser.interface";
 
 class PostsController implements Controller {
   public path = '/posts';
@@ -58,7 +58,7 @@ class PostsController implements Controller {
     const postData: CreatePostDto = request.body;
     const createdPost = new this.post({
       ...postData,
-      authorId: request.user._id,
+      author: request.user._id,
     });
     const savedPost = await createdPost.save();
     response.send(savedPost);
