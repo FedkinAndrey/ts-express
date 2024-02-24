@@ -7,6 +7,9 @@ function validationMiddleware<T>(type: any, skipMissingProperties = false): expr
   return (req, res, next) => {
     validate(plainToInstance(type, req.body), { skipMissingProperties })
       .then((errors: ValidationError[]) => {
+        console.log(1, type)
+        console.log(2, req.body)
+        console.log(3, errors)
         if (errors.length > 0) {
           const message = errors.map((error: ValidationError) => Object.values(error.constraints)).join(', ');
           next(new HttpException(400, message));

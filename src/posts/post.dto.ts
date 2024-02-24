@@ -1,4 +1,10 @@
-import { IsString } from 'class-validator';
+import {IsNumber, IsString, ValidateNested} from 'class-validator';
+import {Type} from "class-transformer";
+
+class CategoryInPostDto {
+  @IsNumber()
+  public id: number;
+}
 
 class CreatePostDto {
   @IsString()
@@ -6,6 +12,10 @@ class CreatePostDto {
 
   @IsString()
   public title: string;
+
+  @ValidateNested()
+  @Type(() => CategoryInPostDto)
+  public categories: CategoryInPostDto[];
 }
 
 export default CreatePostDto;

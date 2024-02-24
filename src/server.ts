@@ -1,37 +1,18 @@
-// import 'dotenv/config';
-// import App from './app';
-// import PostsController from './posts/posts.controller';
-// import {validateEnv} from './utils/validateEnv';
-// import AuthenticationController from "./authentication/authentication.controller";
-// import UserController from "./users/user.controller";
-// import ReportController from "./report/report.controller";
-//
-// validateEnv();
-//
-// const app = new App(
-//   [
-//     new PostsController(),
-//     new AuthenticationController(),
-//     new UserController(),
-//     new ReportController(),
-//   ],
-// );
-//
-// app.listen();
-
-
 import 'dotenv/config';
 import 'reflect-metadata';
+import AddressController from './address/address.controller';
 import App from './app';
-import config from './ormconfig';
+import AuthenticationController from './authentication/authentication.controller';
+import CategoryController from './category/category.controller';
 import PostController from './posts/posts.controller';
 import {validateEnv} from './utils/validateEnv';
+import ormconfig from "./ormconfig";
 
 validateEnv();
 
 (async () => {
   try {
-    await config.initialize()
+    await ormconfig.initialize();
   } catch (error) {
     console.log('Error while connecting to the database', error);
     return error;
@@ -39,6 +20,9 @@ validateEnv();
   const app = new App(
     [
       new PostController(),
+      new AuthenticationController(),
+      new AddressController(),
+      new CategoryController(),
     ],
   );
   app.listen();
