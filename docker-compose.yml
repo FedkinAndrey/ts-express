@@ -6,7 +6,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - /data/postgres:/data/postgres
+      - ~/data/postgres:/var/lib/postgresql/data # Updated to a user's home directory
     env_file:
       - docker.env
     networks:
@@ -20,9 +20,26 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - /data/pgadmin:/root/.pgadmin
+      - ~/data/pgadmin:/root/.pgadmin # Updated to a user's home directory
     env_file:
       - docker.env
+    networks:
+      - postgres
+
+  nodeapp:
+    container_name: backend
+    build: .
+    volumes:
+      - .:/usr/app/
+    ports:
+      - "5001:5001"
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - postgres
+    env_file:
+      -  .env
     networks:
       - postgres
 

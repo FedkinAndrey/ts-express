@@ -8,12 +8,13 @@ import User from '../users/user.entity';
 import ormconfig from "../ormconfig";
 
 async function authMiddleware(request: RequestWithUser, response: Response, next: NextFunction) {
-  const cookies = request.cookies;
+  const headers = request.headers;
   const userRepository = ormconfig.getRepository(User);
-  if (cookies && cookies.Authorization) {
+  if (headers && headers['authorization']) {
     const secret = process.env.JWT_SECRET;
+    const auth = headers['authorization'] as string;
     try {
-      const verificationResponse = jwt.verify(cookies.Authorization, secret) as DataStoredInToken;
+      const verificationResponse = jwt.verify(auth, secret) as DataStoredInToken;
       const id = verificationResponse.id;
       const user = await userRepository.findOne({where: {id: id}});
       if (user) {

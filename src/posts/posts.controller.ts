@@ -35,8 +35,6 @@ class PostsController implements Controller {
   }
 
 
-
-
   private getPostById = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
     const id = request.params.id;
     const post = await this.postRepository.findOne({
