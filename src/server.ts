@@ -7,6 +7,7 @@ import CategoryController from './category/category.controller';
 import PostController from './posts/posts.controller';
 import {validateEnv} from './utils/validateEnv';
 import ormconfig from "./ormconfig";
+import UserController from "./users/user.controller";
 
 validateEnv();
 
@@ -23,6 +24,7 @@ validateEnv();
       new AuthenticationController(),
       new AddressController(),
       new CategoryController(),
+      new UserController()
     ],
   );
   app.listen();

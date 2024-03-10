@@ -1,5 +1,4 @@
 import * as express from 'express';
-import { getRepository } from 'typeorm';
 import Controller from '../interfaces/controller.interface';
 import Address from './address.entity';
 import ormconfig from "../ormconfig";
