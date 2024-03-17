@@ -76,7 +76,7 @@ class AuthenticationController implements Controller {
   }
 
   private loggingOut = (request: express.Request, response: express.Response) => {
-    response.setHeader('Authorization', ['']);
+    response.setHeader('Authorization', '');
     response.send(200);
   }
 
@@ -85,7 +85,7 @@ class AuthenticationController implements Controller {
   }
 
   private createToken(user: User): TokenData {
-    const expiresIn = 60 * 60; // an hour
+    const expiresIn = 60 * 60 * 24;
     const secret = process.env.JWT_SECRET;
     const dataStoredInToken: DataStoredInToken = {
       id: user.id,
