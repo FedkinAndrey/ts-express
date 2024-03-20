@@ -6,6 +6,7 @@ import authMiddleware from '../middleware/auth.middleware';
 import PostEntity from "../posts/post.entity";
 import config from "../ormconfig";
 import UserEntity from "./user.entity";
+import UserWithThatEmailNotFound from "../exceptions/UserWithThatEmailNotFound";
 
 class UserController implements Controller {
   public path = '/users';
@@ -32,7 +33,7 @@ class UserController implements Controller {
       });
 
       if (!user) {
-        return new NotAuthorizedException();
+        next(new UserWithThatEmailNotFound(email));
       }
 
       response.send(user);

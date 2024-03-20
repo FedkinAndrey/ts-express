@@ -85,7 +85,7 @@ class AuthenticationController implements Controller {
   }
 
   private createToken(user: User): TokenData {
-    const expiresIn = 60 * 60 * 24;
+    const expiresIn = 60 * 60 * 24 * 365;
     const secret = process.env.JWT_SECRET;
     const dataStoredInToken: DataStoredInToken = {
       id: user.id,
@@ -95,7 +95,6 @@ class AuthenticationController implements Controller {
       token: jwt.sign(dataStoredInToken, secret, {expiresIn}),
     };
   }
-
 }
 
 export default AuthenticationController;

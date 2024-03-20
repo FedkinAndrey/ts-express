@@ -30,10 +30,14 @@ class PostsController implements Controller {
   }
 
   private getAllPosts = async (request: express.Request, response: express.Response) => {
-    const posts = await this.postRepository.find({relations: ['categories']});
-    response.send(posts);
-  }
+    const posts = await this.postRepository.createQueryBuilder("post")
+      .leftJoinAndSelect("post.categories", "category")
+      .leftJoin("post.author", "author")
+      .addSelect(["author.fullName", "post.id", "post.title", "post.content"]) // Specify fields to select
+      .getMany();
 
+    response.send(posts);
+  };
 
   private getPostById = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
     const id = request.params.id;
