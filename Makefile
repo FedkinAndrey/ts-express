@@ -17,6 +17,11 @@ run:
 	@echo "Запуск всех Docker контейнеров..."
 	@$(DOCKER_COMPOSE) up -d
 
+# Установка зависимостей в запущенном контейнере
+install_deps:
+	@echo "Установка зависимостей в контейнере..."
+	@$(DOCKER_COMPOSE) exec nodeapp npm install
+
 # Остановка и удаление контейнеров
 down:
 	@echo "Остановка всех Docker контейнеров..."
